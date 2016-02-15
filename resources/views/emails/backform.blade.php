@@ -1,0 +1,1 @@
+<p>Delegate confirmation form is filled.</p>
