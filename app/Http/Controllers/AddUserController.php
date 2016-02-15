@@ -14,6 +14,7 @@ use App\User;
 //use App\Invoice;
 use App\Adduser;
 use Hash;
+use DB;
 use Mail;
 
 class AddUserController extends Controller
