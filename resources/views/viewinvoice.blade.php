@@ -268,7 +268,7 @@ td    {padding: 6px;}
               <table cellspacing="0"  style=" border: solid 0.5px #ccc; float:left;font-size: 12px;">
          <tr>
             <td >Company :</td>
-            <td ><b>{{$inv->Companyname}}</b></td>
+            <td  style="width:160px"><b>{{$inv->Companyname}}</b></td>
          
         </tr> 
         <tr>
@@ -398,7 +398,14 @@ td    {padding: 6px;}
     <table  style="width: 750px;   height:80px; border: solid 0.5px #ccc; margin-top:10px; margin-left:20px;  font-size: 12px;">
         <tr>
           <td style="width: 100%;">
-             <b>Payment Terms</b> :  {{$inv->PaymentTerms}}
+             <b>Payment Terms</b> :  <?php
+
+            $payment= $inv->PaymentTerms;
+            // $value=strip_tags($payment);
+           echo str_replace( "", "\r\n", $payment );
+            // echo $value;
+             ?>
+
           </td>
         </tr>
     </table>

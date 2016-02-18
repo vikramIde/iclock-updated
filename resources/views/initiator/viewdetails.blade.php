@@ -134,7 +134,7 @@
          
           <!-- Nav tabs -->
           <ul class="nav nav-tabs nav-primary">
-            <li class="active"><a href="#popular5" data-toggle="tab"><strong>My Deals</strong></a></li>
+            <li class="active"><a href="#popular5" data-toggle="tab"><strong>View Deal Details</strong></a></li>
             <!-- <li><a href="#recent5" data-toggle="tab"><strong>MY Score Card</strong></a></li> -->
             
           </ul>
@@ -153,73 +153,37 @@
                               {
                                 ?>
                         <div class="table-responsive">
-               <table  id="dataTable2" class="table table-bordered table-striped-col">
-                                                                <thead >
-                                                                    <tr>
-                                                                      <th>Leadcode</th>
-                                                                      <th>Company Name</th>
-                                                                      <th>Event Name</th>
-                                                                      <th>Deal Closed Date</th>
-                                                                      <th>Deal Value</th>
-                                                                      <th>Currency</th>
-                                                                      <th>Actions</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                  @foreach($deals as $data)
-                                                                  <tr>
-                                                                     <td>{{$data->leadcode}}</td>
-                                                                  <td>{{$data->Companyname}}</td>
-                                                                  <td>{{$data->Eventname}}</td>
-                                                                  <td >{{$data->Dealdate}}</td>
-                                                                  <td style="text-align:right">{{$data->Dealvalue}}</td>
-                                                                  <td>{{$data->Dealcurr}}</td>
-                                                                  <td>    <a  href="{{ URL::to('/initiator/viewdetails', array('dealid' => $data->leadcode)) }}"  class="btn btn-primary  btn-block">View</a></td>
-                                                                  </tr>
-                                                                  @endforeach                                        
-                                                             </tbody>
-                                                            </table>
-                                                          </div>
+
+                          @foreach($leadsheet as $lead)
+                          <h3>Company name : {{$lead->company_name}}</h3>
+                          <table class="table">
+                            <tr><th>Company name : {{$lead->company_name}}</th>
+                              <th>Website : {{$lead->website}}</th>
+                              <th>Other Ofiice : {{$lead->otheroffice}}</th>
+                               <th>Country : {{$lead->country}}</th>
+                            </tr>
+                                <tr><th>Product Category : {{$lead->product_category}}</th>
+                              <th>Product Sub Category : {{$lead->product_sub_category}}</th>
+                              <th>Phone : {{$lead->phone}}</th>
+                               <th>Fax : {{$lead->fax}}</th>
+                            </tr>
+                                <tr><th>Partnership Package Name : {{$lead->partnership_package_name}}</th>
+                              <th>Partnership Package Value  : {{$lead->partnership_package_value }}</th>
+                          
+                            </tr>
+                          </table>
+
+
+                          @endforeach
+
+
+                         </div>
 
                                                             <?php
                }  elseif($en->emp_department=='Delegates'){
                 ?>
                              <div class="table-responsive">
-               <table  id="dataTable2" class="table table-bordered table-striped-col">
-                                                                <thead >
-                                                                   <tr >
-                                                                      <th ></th>
-                                                                       <th ></th>
-                                                                      <th colspan="4" align="right" >Delegate Information</th>
-                                                                      
-                                                                      
-                                                                    </tr>
-                                                                    <tr>
-                                                          
-                                                                      <th>Company Name</th>
-                                                                      <th>Event Name</th>
-                                                                      <th>Name</th>
-                                                                       <th>Email</th>
-                                                                        <th>Mobile</th>
-                                                                         <th>Designation</th>
-                                                                      
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                  @foreach($delegatedeal as $data)  
-                                                                  <tr>
-
-                                                                  <td>{{$data->Companyname}}</td>
-                                                                  <td>{{$data->Eventname}}</td>
-                                                                   <td>{{$data->name}}</td>
-                                                                   <td>{{$data->email}}</td>
-                                                                   <td>{{$data->mobile}}</td>
-                                                                   <td>{{$data->desg}}</td>
-                                                                  
-                                                                  </tr>
-                                                                  @endforeach                                        
-                                                             </tbody>
-                                                            </table>
+               xxx
                                                           </div>
 
                    <?php 

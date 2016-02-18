@@ -365,7 +365,7 @@ public function getViewinvoice($order_id){
 		Mail::send('emails.test',['Invoice' => 'hgff'], function($message) use ($subject,$htmltosend) {
 		  // note: if you don't set this, it will use the defaults from config/mail.php
 		  $message->from('jeevan@ide-global.com', 'Jeevan');
-		  $message->to('sam@ide-global.com', 'Sam Jacob')
+		  $message->to('harshitha@ide-global.com', 'Sam Jacob')
 		    ->subject($subject)
 		    ->attachData($htmltosend,'invoice.pdf',array('mime'=>'application/pdf','Content-Disposition'=>'attachment'));
 		});
@@ -444,7 +444,7 @@ public function getViewinvoice($order_id){
 		Mail::send('emails.test',['Invoice' => 'hgff'], function($message) use ($subject,$htmltosend) {
 		  // note: if you don't set this, it will use the defaults from config/mail.php
 		  $message->from('jeevan@ide-global.com', 'Jeevan');
-		  $message->to('sam@ide-global.com', 'Sam Jacob')
+		  $message->to('harshitha@ide-global.com', 'Sam Jacob')
 		    ->subject($subject)
 		    ->attachData($htmltosend,'invoice.pdf',array('mime'=>'application/pdf','Content-Disposition'=>'attachment'));
 		});

@@ -3,7 +3,8 @@
 
 
 @section('content')
-
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea#spnotes' });</script>
 <!-- <script type='text/javascript' src="{{asset('js/jquery-1.11.2.min.js')}}"></script> -->
 
 <section>

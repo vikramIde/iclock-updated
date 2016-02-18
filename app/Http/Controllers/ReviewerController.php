@@ -25,9 +25,12 @@ use App\Http\Middleware\Role;
 use App\Event;
 
 use App\User;
-
+use App\Deal;
+use App\leadsheet;
 use App\Employee;
-
+use App\vipbooking;
+use App\delegatedealinfo;
+use App\benefits;
 use App\Invoice;
 
 use Mail;
@@ -307,14 +310,58 @@ public function postRejectinvoice( Request $request) {
 
 			}
 
-    
-
-
 
 }
+public function getPendingactivity (){
+	$varr= Auth::user()->empid;
 
+           $evarr=User::where('empid',$varr)->get();
+
+             $edetails=Employee::where('emp_ide_id',$varr)->get();
+
+
+$deals=DB::table('leadsheet')
+            ->join('Deal', 'leadsheet.leadcode', '=', 'Deal.leadcode')
+             ->join('benefits', 'leadsheet.leadcode', '=', 'benefits.leadcode')
+             ->join('delegatedealinfo', 'leadsheet.leadcode', '=', 'delegatedealinfo.leadcode')
+              ->join('vipbooking', 'leadsheet.leadcode', '=', 'vipbooking.leadcode')
+             ->where('id', DB::raw("(select max(`id`) from vipbooking)"))
+           ->where('leadsheet.leadcat', '=','Delegates')
+        
+            ->get();
+          
+       dd($deals);
+	return view('reviewer/pendingactivity')->with(array('edetails'=>$edetails,'deals'=>$deals));
+}
+
+public function getEditdeal ($leadcode){
+	// dd($leadcode);
+	$varr= Auth::user()->empid;
+
+           $evarr=User::where('empid',$varr)->get();
+
+             $edetails=Employee::where('emp_ide_id',$varr)->get();
+
+
+	$vip=vipbooking::where('leadcode',$leadcode)->get();
+	$benefits=benefits::where('leadcode',$leadcode)->get();
+	return view('reviewer/editdeal')->with(array('vip'=>$vip,'benefits'=>$benefits,'edetails'=>$edetails));
+}
+
+public function getUpdatedeal ($leadcode){
+	// dd($leadcode);
+	$varr= Auth::user()->empid;
+
+           $evarr=User::where('empid',$varr)->get();
+
+             $edetails=Employee::where('emp_ide_id',$varr)->get();
+
+
+	$vip=vipbooking::where('leadcode',$leadcode)->get();
+	$benefits=benefits::where('leadcode',$leadcode)->get();
+	return view('reviewer/updatedeal')->with(array('vip'=>$vip,'benefits'=>$benefits,'edetails'=>$edetails));
+}
     
-
 
 
 }

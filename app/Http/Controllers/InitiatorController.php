@@ -258,7 +258,10 @@ public function postDealinsert( Request $request ) {
 		$leadid = Input::get('leadid');
 		$empdept= Input::get('empdept');
 
+//billing address
 
+		$billingaddress=$data['billingadd'];
+		$billiong=preg_replace( "/\r|\n/", "", $billingaddress);
 		
 		$rules = array(
 
@@ -302,7 +305,7 @@ public function postDealinsert( Request $request ) {
 		$c->Companyname = $data['company'];
 		$c->Eventcode=$eventcode;
 		$c->Eventname  = $eventname;
-		$c->billingadd = $data['billingadd'];
+		$c->billingadd = $billiong;
 		$c->Dealdate = $data['dealdate'];
 		$c->Dealvalue = $data['deal_value'];
 		$c->Dealtype= $data['deal_type'];
@@ -315,7 +318,7 @@ public function postDealinsert( Request $request ) {
 
 		$c->Status=$dealstatus;
 		// dd($exchnagerate);
-		$c->save();
+		//$c->save();
 		$lastinsertid=$c->Id;
 		// dd($lastinsertid);
 
@@ -335,8 +338,8 @@ public function postDealinsert( Request $request ) {
 		
 				$invemail->leadcode = $data['leadcode'];
 
-			
-				$invemail->save();
+			dd($invemail);
+				//$invemail->save();
 			    
 			 }
 
@@ -466,7 +469,7 @@ public function getLeadsheet(){
            $evarr=User::where('empid',$varr)->get();
              $edetails=Employee::where('emp_ide_id',$varr)->get();
 
-           $leads=leadsheet::where('empid',$varr)->where('callback','=','0')->where('followup','=','0')->where('reassignedId','=','0')->where('dealclose','=','')->where('blowout','=','')->get();
+           $leads=leadsheet::where('empid',$varr)->where('callback','=','0')->where('followup','=','0')->where('reassignedId','=','0')->where('dealclose','=','')->where('blowout','=','')->orderBy('leadcode', 'desc')->get();
 	 $assignedme = leadsheet::where('reassignedId',$varr)->where('reassigned','=',1)->where('leadcat','!=','Marketing')->get(); 
 	
 
@@ -852,7 +855,7 @@ public function postUpdateleadsheet( Request $request ) {
 		        
 		            if($i>0){
 		$request->session()->flash('alert-success', 'Updated Successfully');
-		return redirect('initiator/callbackassigned');
+		return redirect('initiator/dealclose');
 
  }
 }
@@ -1074,7 +1077,8 @@ public function postReactivatedeal( Request $request ) {
 			$leadid = Input::get('leadid');
 			$empdept= Input::get('empdept');
 
-
+$billingaddress=$data['billingadd'];
+		$billiong=preg_replace( "/\r|\n/", "", $billingaddress);
 
 			$dealstatus='1';
 			$dealtype='single';
@@ -1109,7 +1113,7 @@ public function postReactivatedeal( Request $request ) {
 			}
 
 			$c->Companyname = $data['company'];
-			$c->billingadd = $data['billingadd'];
+			$c->billingadd = $billiong;
 			
 			$c->Eventcode=$eventcode;
 			$c->Eventname  = $eventname;
@@ -1206,8 +1210,9 @@ return redirect('initiator/pendingactivity/');
 	$dealid=$editlead->Id;
 	$leadcode=$editlead->leadcode;
 	}
-	$editlead=vipbooking::where('leadcode',$leadcode)->where('deal_id',$dealid)->where('id', DB::raw("(select max(`id`) from vipbooking)"))->get();
-	$delegateinfo=delegatedealinfo::where('leadcode',$leadcode)->where('deal_id',$dealid)->get();
+	$editlead=vipbooking::where('leadcode',$leadcode)->max('id');
+	// dd($editlead);
+	$delegateinfo=delegatedealinfo::where('leadcode',$leadcode)->max('id');
 	//dd(count($editlead));
       return View('initiator/editdeal')->with(array('lead_id'=>$lead_id,'editlead'=>$editlead,'emp'=>$emp,'delegateinfo'=>$delegateinfo));
 }
@@ -1563,5 +1568,32 @@ $subject =$event ."_"."Delegate"."Booking" ."Form"."_" . $company;
       
 
     }
+
+
+     public function getViewdetails($dealid){
+ 	
+ 	$leadsheet=leadsheet::where('leadcode',$dealid)->get();
+ 	// dd($leadsheet);
+ 	$varr= Auth::user()->empid;	
+	$evarr=User::where('empid',$varr)->get();
+	$emp=Employee::where('emp_ide_id',$varr)->get();
+	foreach($emp as $empp){
+		$fromemail=$empp->email;
+	}
+	// dd($fromemail);
+		
+	$lead_id=Deal::where('leadcode',$dealid)->get();
+	foreach($lead_id as $editlead){
+	$dealid=$editlead->Id;
+	$leadcode=$editlead->leadcode;
+	}
+
+	
+	// dd($dealid);
+	$editlead=vipbooking::where('leadcode',$leadcode)->where('deal_id',$dealid)->where('id', DB::raw("(select max(`id`) from vipbooking)"))->get();
+	$delegateinfo=delegatedealinfo::where('leadcode',$leadcode)->where('deal_id',$dealid)->get();
+	//dd(count($editlead));
+      return View('initiator/viewdetails')->with(array('lead_id'=>$lead_id,'editlead'=>$editlead,'emp'=>$emp,'delegateinfo'=>$delegateinfo,'leadsheet'=>$leadsheet));
+}
 
 }

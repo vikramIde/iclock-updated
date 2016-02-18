@@ -413,6 +413,7 @@ $("#table-data").on('click', 'input.delete', function() {
                                             <input type="radio" autocomplete="off" name="specification" value="Single Occupancy"> Single Occupancy
                                             <input type="radio" autocomplete="off" name="specification" value=" Double Occupancy"> Double Occupancy
                                             <input type="radio" autocomplete="off" name="specification" value="Single & Double Occupancy"> Single & Double Occupancy
+                                       
                                         </div>
                                         </div>
 

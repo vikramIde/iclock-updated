@@ -28,6 +28,14 @@
             
               </ul>
             </li>
+              <li class="nav-parent">
+              <a href=""><i class="fa fa-home"></i><span> Hotel & Travel</span></a>
+             
+             <ul class="children">
+                <li><a  href="{{ URL::to('reviewer/pendingactivity') }}" ><i class="fa fa-home"></i><span> Pending Activity</span></a></li>
+            
+              </ul>
+            </li>
         
             <?php } ?>
           </ul>
